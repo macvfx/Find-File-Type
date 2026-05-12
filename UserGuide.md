@@ -139,7 +139,7 @@ Alerts are currently visual only (shown in the UI). Notification support is plan
 
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.1 (build 4)** — see [CHANGELOG.md](CHANGELOG.md) for what changed.
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.1 (build 4)** — 
 
 ---
 
