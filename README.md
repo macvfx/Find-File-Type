@@ -11,9 +11,6 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 - Default seed expanded from ~78 to **102 file types**, with several v1.0 miscategorizations corrected (notably `mxf` → professional container, `mov` → video container, `dng` moved from Video to Images).
 - Inline-editable category table with per-row "reset to default" and Import / Export CSV (merge or replace).
 - Zero-byte non-symlink files excluded from breakdowns by default (toggle in Settings → Exclusions).
-- Legacy / niche flags surface rarely-used formats.
-
-Schema migrates forward-only from v1.0 — see [CHANGELOG.md](CHANGELOG.md) for the full list.
 
 ## Features
 
@@ -36,16 +33,6 @@ Schema migrates forward-only from v1.0 — see [CHANGELOG.md](CHANGELOG.md) for 
 - macOS 14.0+
 - Xcode 16.0+
 - Swift 6.0
-
-## Build
-
-Open `FindFileTypes.xcodeproj` in Xcode and build (Cmd+B), or from the terminal:
-
-```bash
-cd FindFileTypes
-swift build
-swift run
-```
 
 ## Database
 
