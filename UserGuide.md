@@ -9,6 +9,8 @@
 
 The app immediately starts scanning the folder and adds it to the sidebar under "Watched Folders."
 
+While a scan is running, the app shows a centered progress overlay with the folder name, file count, and a **Cancel Scan** button. This is especially useful if you accidentally start scanning a very large NAS, SAN, or cloud-backed folder and want to stop before it completes.
+
 ### Supported Volume Types
 
 Find File Types works with any mounted volume:
@@ -37,6 +39,8 @@ Right-click a folder for options:
 - **Reveal in Finder** — open the folder in Finder
 - **Remove** — stop watching and delete scan data
 
+If a scan is already running, new manual scans are blocked until the current one finishes or is cancelled.
+
 ### Overview
 
 Shows summary cards (folder count, total size, total files, type groups) and a list of all watched folders with their schedule status:
@@ -50,6 +54,8 @@ Three tabs:
 - **By Type** — pie chart and table showing storage breakdown by file extension, with category and group labels
 - **By Folder** — horizontal bar chart and table showing storage per top-level subfolder
 - **Dead Symlinks** — list of symbolic links pointing to non-existent targets
+
+The toolbar also includes **Scan Now** for the selected folder. Starting a scan from here uses the same cancelable overlay as drag-and-drop or the sidebar `+` button.
 
 ### Insights
 
@@ -97,7 +103,7 @@ Manage how every file extension is classified. Each row carries four classificat
 - **Role** — what job the file plays for the user, e.g., `camera original`, `editorial media`, `timeline interchange`, `color pipeline`
 - **Color** — used in charts and menu bar pills
 
-Each row also carries hidden `IsLegacy` / `IsNiche` flags that round-trip through CSV export/import — they are not surfaced in the UI in this release. A user-editable tags column is planned for v1.2; until then the flags exist as data only.
+Each row also carries hidden `IsLegacy` / `IsNiche` flags that round-trip through CSV export/import — they are not surfaced in the UI in this release. A user-editable tags column is still planned for a future release; until then the flags exist as data only.
 
 Every cell is editable in place. Click the **↺ reset** button next to a row to restore its v1.1 default values — that button only appears when the row has been edited away from the default. Use the **Reset All to Defaults** button at the top to wipe customizations and start over.
 
@@ -114,6 +120,8 @@ Filter by **Group** or **Stage** using the pickers in the header to find specifi
 
 **Include zero-byte files in breakdowns** — off by default. Files that are 0 bytes and not symbolic links are excluded from the type and folder breakdowns so totals reflect actual storage use. Dead symlinks (counted at 0 bytes by design) are always shown. Turn this on if you want to see empty placeholder files in the charts.
 
+**Rebuild Current Data** — deletes all scanned file records, historical snapshots, and last-scan dates, then rescans every watched folder from scratch. It keeps your watched folders, file-type categories, exclusions, alerts, and other settings. Use this when you want to recatalog against updated classification rules or after changing what should be ignored.
+
 **Bundle Exclusions** — extensions listed here are **skipped** during scanning. The scanner will not descend into directories with these extensions.
 
 Defaults: `.fcpbundle`, `.app`, `.photoslibrary`, `.fcpproject`
@@ -126,22 +134,26 @@ Configure scan frequency per watched folder:
 - **Interval** — Hourly, Daily, or Weekly
 - **Preferred time** — for Daily/Weekly, set the hour and minute when the scan should run
 
+The preferred-time menus now show the exact selected hour and minute directly in the control, which makes it easier to confirm the saved schedule at a glance.
+
 Busy windows (configured per folder in the database) defer scanning to outside the window, similar to BackupTrust's busy-window feature.
 
 ### Alerts Tab
 
 Define storage threshold rules:
 - **Type** — match by extension, category, or group
+- **Scope** — apply the rule to all watched folders or to one specific watched folder
 - **Value** — the extension/category/group name to watch
-- **Threshold** — size in GB that triggers the alert
+- **Metric** — choose whether the threshold is based on total size or file count
+- **Threshold** — either size in GB or number of files, depending on the chosen metric
 
 Alerts are currently visual only (shown in the UI). Notification support is planned for a future version.
 
+Offline watched-folder failures also appear here conceptually now: when a volume is unavailable, the app shows a non-blocking banner instead of a modal alert, and you can mute that folder's offline warning for **1 hour**, **1 day**, or **always**. Any folder muted with **always** appears in an override list in Alerts so you can turn warnings back on later.
+
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.1 (build 4)** — 
-
----
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.2 (build 3)** — 
 
 ## File Type Categories
 
@@ -149,12 +161,12 @@ The app ships with 100+ pre-configured file types. Each row layers four classifi
 
 | Group | Example Categories | Example Extensions |
 |-------|-------------------|-------------------|
-| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream | mxf, r3d, braw, ari, mov, prproj, aep, mp4, mkv, ts |
+| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream, proxy video | mxf, r3d, braw, ari, mov, prproj, aep, mp4, mkv, ts, mts, m2ts, lrv |
 | Audio | lossless audio, lossy audio, core audio container | wav, aiff, flac, caf, mp3, aac, m4a |
 | Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf |
-| Documents | document, spreadsheet, tabular data, fixed-layout document, presentation, screenplay, plain text, markup document | docx, xlsx, csv, pdf, pptx, pages, fdx, html, txt, md |
-| Archives | archive, disk image | zip, tar, gz, 7z, dmg, iso |
-| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, lut / color transform, archive stub | fcpbundle, fcpevent, srt, xml, mhl, xmp, edl, ale, otio, cube, cdl, p5a, p5c, plist |
+| Documents | document, spreadsheet, tabular data, fixed-layout document, presentation, screenplay, plain text, markup document, email message, web archive, text snippet | docx, xlsx, csv, pdf, pptx, pages, fdx, html, txt, md, eml, url, webarchive, textclipping |
+| Archives | archive, disk image, disc image metadata | zip, tar, gz, 7z, dmg, iso, img, sparseimage, disc |
+| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache | fcpbundle, fcpevent, srt, xml, yml, mhl, xmp, edl, ale, omf, aaf, otio, cube, cdl, lrprev, p5a, p5c, plist |
 
 ### Walkthrough: a `.mov` file
 
@@ -183,7 +195,7 @@ You can add, modify, or remove any of these in **Settings > File Types**. Use **
 
 `~/Library/Application Support/FindFileTypes/findfiletypes.sqlite`
 
-The database uses SQLite with WAL journal mode for safe concurrent reads. Historical snapshots are retained indefinitely. To reset, quit the app and delete the database file.
+The database uses SQLite with WAL journal mode for safe concurrent reads. Historical snapshots are retained indefinitely. For an in-app refresh, use **Settings > Exclusions > Rebuild Current Data**. To fully wipe everything, quit the app and delete the database file.
 
 ---
 
@@ -193,3 +205,4 @@ The database uses SQLite with WAL journal mode for safe concurrent reads. Histor
 - **Find large files** — use Search with a minimum size filter (e.g., 1000 MB) to find files over 1 GB.
 - **Dead symlink cleanup** — after migration or reorganization, check the Dead Symlinks tab to find broken links that need fixing.
 - **Schedule scans overnight** — set the preferred time to a low-activity hour (e.g., 2:00 AM) to avoid impacting editing workflows.
+- **Cancel a mistaken scan quickly** — if you drop a huge network folder by accident, use the centered scan overlay’s **Cancel Scan** button before the crawl finishes.
