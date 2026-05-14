@@ -1,20 +1,25 @@
 # Find File Types
 
-A swiftUI macOS app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
+A native macOS app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
 
-Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
+Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A prominent in-progress overlay appears while scanning, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.1 (build 4)
+## What's New in 1.2 (build 3)
 
-- New app icon.
-- Four-axis classification: every file type now has Group + Category + **Stage** + **Role**.
-- Default seed expanded from ~78 to **102 file types**, with several v1.0 miscategorizations corrected (notably `mxf` → professional container, `mov` → video container, `dng` moved from Video to Images).
-- Inline-editable category table with per-row "reset to default" and Import / Export CSV (merge or replace).
-- Zero-byte non-symlink files excluded from breakdowns by default (toggle in Settings → Exclusions).
+- Cancelable scan overlay for long-running folder scans, including network volumes.
+- Bigger, more prominent scan progress UI with a clear cancelling state.
+- Preferred schedule hour/minute pickers now show the selected value reliably.
+- Alert rules can now target either total size or file count, and can be scoped to a specific watched folder.
+- Sidebar watched folders now show a storage/location badge and reveal the full path on hover.
+- Offline watched-folder failures now show a non-blocking banner instead of a modal error.
+- Offline warning banners can now be muted for `1 hour`, `1 day`, or `always`, and `always` overrides can be managed in Settings → Alerts.
+- Real-world catalog expansion: added recognition for `mpeg`, `mts`, `m2ts`, `lrv`, `flv`, `swf`, `img`, `sparseimage`, `disc`, `eml`, `yml`, `yaml`, `url`, `webarchive`, `textclipping`, `omf`, `aaf`, `lrprev`, and `lprev`.
+- Junk-extension filtering is smarter about generated restore / scratch suffixes while preserving real formats like `3gp` and `7z`.
 
 ## Features
 
 - **Drag-and-drop** folder watching — or use the + button
+- **Cancelable scans** — every manual scan shows a prominent progress overlay with a `Cancel Scan` button
 - **Four-axis classification** — Group (Video, Audio, Images, Documents, Archives, Projects), Category (structural file-type class), Stage (Preproduction → Archive workflow lifecycle), Role (what the file is used for)
 - **100+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
 - **Inline-editable categories** — edit any cell, reset a row to its default, bulk import/export the category schema as CSV
@@ -22,17 +27,16 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 - **Symbolic link awareness** — symlinks counted at 0 bytes, dead symlinks flagged in a dedicated view
 - **Zero-byte filter** — files that don't use storage are excluded from breakdowns by default (toggle in Settings)
 - **Bundle exclusions** — skip `.fcpbundle`, `.app`, `.photoslibrary` and other bundles (configurable)
+- **Junk-extension filter** — disposable numeric-only suffixes, generated restore fragments, and known junk extensions are ignored during scanning so they do not pollute totals
 - **Historical snapshots** — indefinite retention, trend charts via Swift Charts
 - **Menu bar dropdown** — colored pills showing storage breakdown by group, per-folder or all folders
 - **Search** — find files by name, extension, size range across all watched folders
 - **Offline support** — unmounted volumes show last-known data from the database
-- **Alert rules** — define storage thresholds per extension, category, or group (visual for now)
+- **Alert rules** — define visual thresholds per extension, category, or group by total size or file count, across all watched folders or one folder
 
 ## Requirements
 
 - macOS 14.0+
-- Xcode 16.0+
-- Swift 6.0
 
 ## Database
 
