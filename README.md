@@ -15,9 +15,7 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 - Offline warning banners can now be muted for `1 hour`, `1 day`, or `always`, and `always` overrides can be managed in Settings → Alerts.
 - Real-world catalog expansion: added recognition for `mpeg`, `mts`, `m2ts`, `lrv`, `lrf`, `flv`, `swf`, `img`, `sparseimage`, `disc`, `eml`, `yml`, `yaml`, `url`, `webarchive`, `textclipping`, `omf`, `aaf`, `lrprev`, `lprev`, `otf`, `acr`, `rtn`, `drt`, `dwg`, `dxf`, and `ttml`.
 - Junk-extension filtering is smarter about generated restore / scratch suffixes while preserving real formats like `3gp` and `7z`.
-
-For the full release history, see [CHANGELOG.md](CHANGELOG.md).
-
+- 
 ## Features
 
 - **Drag-and-drop** folder watching — or use the + button
