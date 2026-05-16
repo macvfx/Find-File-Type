@@ -1,10 +1,10 @@
 # Find File Types
 
-A native macOS app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
+A macOS swift app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A prominent in-progress overlay appears while scanning, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.2 (build 3)
+## What's New in 1.2 (build 4)
 
 - Cancelable scan overlay for long-running folder scans, including network volumes.
 - Bigger, more prominent scan progress UI with a clear cancelling state.
@@ -13,8 +13,10 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 - Sidebar watched folders now show a storage/location badge and reveal the full path on hover.
 - Offline watched-folder failures now show a non-blocking banner instead of a modal error.
 - Offline warning banners can now be muted for `1 hour`, `1 day`, or `always`, and `always` overrides can be managed in Settings → Alerts.
-- Real-world catalog expansion: added recognition for `mpeg`, `mts`, `m2ts`, `lrv`, `flv`, `swf`, `img`, `sparseimage`, `disc`, `eml`, `yml`, `yaml`, `url`, `webarchive`, `textclipping`, `omf`, `aaf`, `lrprev`, and `lprev`.
+- Real-world catalog expansion: added recognition for `mpeg`, `mts`, `m2ts`, `lrv`, `lrf`, `flv`, `swf`, `img`, `sparseimage`, `disc`, `eml`, `yml`, `yaml`, `url`, `webarchive`, `textclipping`, `omf`, `aaf`, `lrprev`, `lprev`, `otf`, `acr`, `rtn`, `drt`, `dwg`, `dxf`, and `ttml`.
 - Junk-extension filtering is smarter about generated restore / scratch suffixes while preserving real formats like `3gp` and `7z`.
+
+For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Features
 
