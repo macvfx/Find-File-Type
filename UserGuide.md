@@ -153,7 +153,8 @@ Offline watched-folder failures also appear here conceptually now: when a volume
 
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.2 (build 3)** — 
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.2 (build 4)** 
+---
 
 ## File Type Categories
 
@@ -161,12 +162,12 @@ The app ships with 100+ pre-configured file types. Each row layers four classifi
 
 | Group | Example Categories | Example Extensions |
 |-------|-------------------|-------------------|
-| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream, proxy video | mxf, r3d, braw, ari, mov, prproj, aep, mp4, mkv, ts, mts, m2ts, lrv |
+| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream, proxy video | mxf, r3d, braw, ari, mov, prproj, aep, mp4, mkv, ts, mts, m2ts, lrv, lrf |
 | Audio | lossless audio, lossy audio, core audio container | wav, aiff, flac, caf, mp3, aac, m4a |
-| Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf |
+| Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, cad drawing | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf, otf, dwg, dxf |
 | Documents | document, spreadsheet, tabular data, fixed-layout document, presentation, screenplay, plain text, markup document, email message, web archive, text snippet | docx, xlsx, csv, pdf, pptx, pages, fdx, html, txt, md, eml, url, webarchive, textclipping |
 | Archives | archive, disk image, disc image metadata | zip, tar, gz, 7z, dmg, iso, img, sparseimage, disc |
-| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache | fcpbundle, fcpevent, srt, xml, yml, mhl, xmp, edl, ale, omf, aaf, otio, cube, cdl, lrprev, p5a, p5c, plist |
+| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata | fcpbundle, fcpevent, srt, ttml, xml, yml, mhl, xmp, acr, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist |
 
 ### Walkthrough: a `.mov` file
 
