@@ -1,27 +1,23 @@
 # Find File Types
 
-A macOS swift app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
+A macOS swiftUI app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
 
-Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A prominent in-progress overlay appears while scanning, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
+Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.2 (build 4)
+## What's New in 1.5
 
-- Cancelable scan overlay for long-running folder scans, including network volumes.
-- Bigger, more prominent scan progress UI with a clear cancelling state.
-- Preferred schedule hour/minute pickers now show the selected value reliably.
-- Alert rules can now target either total size or file count, and can be scoped to a specific watched folder.
-- Sidebar watched folders now show a storage/location badge and reveal the full path on hover.
-- Offline watched-folder failures now show a non-blocking banner instead of a modal error.
-- Offline warning banners can now be muted for `1 hour`, `1 day`, or `always`, and `always` overrides can be managed in Settings → Alerts.
-- Real-world catalog expansion: added recognition for `mpeg`, `mts`, `m2ts`, `lrv`, `lrf`, `flv`, `swf`, `img`, `sparseimage`, `disc`, `eml`, `yml`, `yaml`, `url`, `webarchive`, `textclipping`, `omf`, `aaf`, `lrprev`, `lprev`, `otf`, `acr`, `rtn`, `drt`, `dwg`, `dxf`, and `ttml`.
-- Junk-extension filtering is smarter about generated restore / scratch suffixes while preserving real formats like `3gp` and `7z`.
-- 
+- **Uncategorized file type classifier** — a new sidebar tab lists every unknown extension sorted by impact, with an inline classification form, autocomplete, and sample file paths for context.
+- **Completion tracking** — a progress bar shows what percentage of your files are categorized, with color-coded thresholds.
+- **Contribute classifications** — export your user-added types as CSV or copy to clipboard to share via GitHub and help improve the default catalog for everyone.
+- **Ignore junk extensions** — hide generated or irrelevant extensions so they don't clutter the list or lower your completion score.
+- **NEW badges** — freshly discovered extensions after each scan are flagged for quick classification.
+
 ## Features
 
-- **Drag-and-drop** folder watching — or use the + button
-- **Cancelable scans** — every manual scan shows a prominent progress overlay with a `Cancel Scan` button
+- **Drag-and-drop** folder watching — or use the +/− toolbar buttons
+- **Cancelable scans** — every manual scan shows a non-blocking bottom banner with a `Cancel` button
 - **Four-axis classification** — Group (Video, Audio, Images, Documents, Archives, Projects), Category (structural file-type class), Stage (Preproduction → Archive workflow lifecycle), Role (what the file is used for)
-- **100+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
+- **150+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
 - **Inline-editable categories** — edit any cell, reset a row to its default, bulk import/export the category schema as CSV
 - **Scheduled scanning** — hourly, daily, or weekly with preferred time and busy-window support (same scheduling model as BackupTrust)
 - **Symbolic link awareness** — symlinks counted at 0 bytes, dead symlinks flagged in a dedicated view
