@@ -9,7 +9,7 @@
 
 The app immediately starts scanning the folder and adds it to the sidebar under "Watched Folders."
 
-While a scan is running, the app shows a centered progress overlay with the folder name, file count, and a **Cancel Scan** button. This is especially useful if you accidentally start scanning a very large NAS, SAN, or cloud-backed folder and want to stop before it completes.
+While a scan is running, a compact banner appears at the bottom of the window showing the folder name, file count, and a **Cancel** button — the rest of the app remains fully interactive so you can browse other folders, insights, or search results while the scan runs.
 
 ### Supported Volume Types
 
@@ -33,11 +33,13 @@ The sidebar has two sections:
 - **Navigation** — Overview, Insights, and Search views
 - **Watched Folders** — all registered folders with last-scan timestamps
 
+Use the **+** button to add a folder and the **−** button to remove the currently selected folder (with confirmation).
+
 Right-click a folder for options:
 - **Scan Now** — trigger an immediate rescan
 - **Active** toggle — pause/resume scheduled scanning
 - **Reveal in Finder** — open the folder in Finder
-- **Remove** — stop watching and delete scan data
+- **Remove** — stop watching and delete scan data (asks for confirmation)
 
 If a scan is already running, new manual scans are blocked until the current one finishes or is cancelled.
 
@@ -48,14 +50,26 @@ Shows summary cards (folder count, total size, total files, type groups) and a l
 - **Orange badge** — scan deferred (busy window active)
 - **Grey badge** — paused
 
+The **Storage Facts** button (lightbulb icon in the toolbar) opens a popover with fun facts about your cataloged storage — total files, largest category, most common types, biggest extension by size, and scan history.
+
+On launch, the app auto-selects your first watched folder and preloads its data, so you land directly on useful information without a second loading screen.
+
 ### Folder Detail (click a folder in sidebar)
 
 Three tabs:
 - **By Type** — pie chart and table showing storage breakdown by file extension, with category and group labels
-- **By Folder** — horizontal bar chart and table showing storage per top-level subfolder
+- **By Folder** — horizontal bar chart and list showing storage per subfolder, with interactive drill-down (see below)
 - **Dead Symlinks** — list of symbolic links pointing to non-existent targets
 
-The toolbar also includes **Scan Now** for the selected folder. Starting a scan from here uses the same cancelable overlay as drag-and-drop or the sidebar `+` button.
+#### Folder Drill-Down
+
+Click any subfolder name in the list (or tap its bar in the chart) to drill into that directory. The view updates to show the selected folder's immediate children — subfolders appear first as clickable blue links, followed by a "Files" section listing individual files at that level with their name, extension, and size.
+
+A **breadcrumb trail** (e.g. Root > ProjectA > src) appears above the chart when you've drilled in. Click any segment to jump back to that level, or click **Root** to return to the top.
+
+The summary footer at the bottom shows the subfolder count, loose file count, total files (including nested), and combined size for the current level.
+
+The toolbar also includes **Scan Now** for the selected folder. Starting a scan from here uses the same non-blocking bottom banner as drag-and-drop or the sidebar `+` button.
 
 ### Insights
 
@@ -75,6 +89,34 @@ Search across all files in watched folders by:
 
 Results show file name, extension, size, path, modification date, and symlink status.
 
+### Uncategorized
+
+The Uncategorized tab in the sidebar shows every file extension that hasn't been classified yet, sorted by file count so the most impactful types appear first. A completion bar at the top tracks your overall coverage percentage.
+
+**Search and sort:** Use the search field to find a specific extension, or switch between sorting by File Count, Total Size, or Extension name.
+
+**Classifying an extension:** Click the **Classify** button on any row. The row highlights and an inline form expands below it with:
+- **Group** — the broad family (Video, Audio, Images, Documents, Archives, Projects)
+- **Category** — a descriptive label (e.g. "metadata sidecar", "shell script"). Start typing to see autocomplete suggestions from existing categories.
+- **Stage** — optional lifecycle position (Preproduction through Admin)
+- **Role** — optional description of what the file does
+
+Click **Save** to add the extension to your local catalog. It immediately appears in Settings → File Types, updates your charts, and removes it from the uncategorized list. A color is auto-assigned based on the group you choose.
+
+**Ignoring junk extensions:** Click the **x** button on extensions you don't want to classify (generated suffixes, tool-specific scratch files, etc.). They disappear from the list and don't count against your completion percentage. Toggle **Show Ignored** in the toolbar to see and restore ignored extensions.
+
+**NEW badges:** After a scan discovers extensions you haven't seen before, they appear with a blue "NEW" badge so you can quickly spot and classify them.
+
+#### Contributing Your Classifications
+
+When you classify extensions that aren't in the app's default catalog, they become contributions you can share to help improve Find File Type for everyone. The contribution bar at the bottom of the Uncategorized tab shows how many custom types you've added.
+
+Two ways to share:
+- **Export CSV** — saves a CSV file containing only your user-added types (not the built-in defaults). Email this to the developer or attach it to a GitHub issue at [macvfx/Find-File-Type](https://github.com/macvfx/Find-File-Type).
+- **Copy to Clipboard** — copies your contributions in CSV format, ready to paste into a GitHub issue or discussion.
+
+Both options are available from the contribution bar and the toolbar Contribute menu.
+
 ---
 
 ## Menu Bar
@@ -85,6 +127,12 @@ Click the **doc.viewfinder** icon in the menu bar to see a dropdown summary:
 - **Colored pills** — one row per file group (Video, Audio, Documents, etc.) showing file count, total size, and percentage
 - **Stacked bar** — visual proportion of each group
 - **Open App** button — bring the main window to front
+
+---
+
+## Help
+
+Access via the menu bar: **Help > Find File Type Help**. Opens a dedicated help window with a guide covering all features, workflow tips, and keyboard shortcuts.
 
 ---
 
@@ -122,6 +170,8 @@ Filter by **Group** or **Stage** using the pickers in the header to find specifi
 
 **Rebuild Current Data** — deletes all scanned file records, historical snapshots, and last-scan dates, then rescans every watched folder from scratch. It keeps your watched folders, file-type categories, exclusions, alerts, and other settings. Use this when you want to recatalog against updated classification rules or after changing what should be ignored.
 
+**Maximum extension length** — extensions longer than this limit (default: 12 characters) are ignored during scanning, unless they are already in the File Types catalog. This filters out thousands of generated garbage suffixes from Xcode build artifacts, restore fragments, and other tool-generated scratch files. Adjust via the stepper (range: 4–24).
+
 **Bundle Exclusions** — extensions listed here are **skipped** during scanning. The scanner will not descend into directories with these extensions.
 
 Defaults: `.fcpbundle`, `.app`, `.photoslibrary`, `.fcpproject`
@@ -153,21 +203,22 @@ Offline watched-folder failures also appear here conceptually now: when a volume
 
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.2 (build 4)** 
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.5 (build 1)** 
+
 ---
 
 ## File Type Categories
 
-The app ships with 100+ pre-configured file types. Each row layers four classification axes — Group, Category, Stage, Role — plus optional legacy/niche flags and notes.
+The app ships with 150+ pre-configured file types. Each row layers four classification axes — Group, Category, Stage, Role — plus optional legacy/niche flags and notes.
 
 | Group | Example Categories | Example Extensions |
 |-------|-------------------|-------------------|
-| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream, proxy video | mxf, r3d, braw, ari, mov, prproj, aep, mp4, mkv, ts, mts, m2ts, lrv, lrf |
-| Audio | lossless audio, lossy audio, core audio container | wav, aiff, flac, caf, mp3, aac, m4a |
-| Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, cad drawing | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf, otf, dwg, dxf |
-| Documents | document, spreadsheet, tabular data, fixed-layout document, presentation, screenplay, plain text, markup document, email message, web archive, text snippet | docx, xlsx, csv, pdf, pptx, pages, fdx, html, txt, md, eml, url, webarchive, textclipping |
-| Archives | archive, disk image, disc image metadata | zip, tar, gz, 7z, dmg, iso, img, sparseimage, disc |
-| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata | fcpbundle, fcpevent, srt, ttml, xml, yml, mhl, xmp, acr, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist |
+| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream, proxy video | mxf, r3d, braw, ari, mov, qt, prproj, aep, mp4, mkv, ts, mts, m2ts, lrv, lrf |
+| Audio | lossless audio, lossy audio, compressed audio, raw audio, audio ringtone, audio project, core audio container | wav, aiff, aifc, flac, caf, pcm, mp3, aac, m4a, m4r, aup3 |
+| Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, cad drawing, thumbnail | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf, otf, dwg, dxf, thm, pict |
+| Documents | document, spreadsheet, tabular data, tab-separated values, fixed-layout document, presentation, screenplay, plain text, markup document, email message, database file, contact card, web archive, text snippet | docx, xlsx, csv, tsv, pdf, pptx, pps, pages, fdx, html, htm, txt, md, eml, emlx, fp7, vcf, url, webarchive, textclipping |
+| Archives | archive, disk image, disc image metadata, installer package, compressed archive, app archive | zip, tar, gz, bz2, 7z, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar |
+| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, shell script, compiled script | fcpbundle, fcpevent, srt, ttml, xml, yml, mhl, xmp, acr, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, sh, scpt |
 
 ### Walkthrough: a `.mov` file
 
@@ -206,4 +257,5 @@ The database uses SQLite with WAL journal mode for safe concurrent reads. Histor
 - **Find large files** — use Search with a minimum size filter (e.g., 1000 MB) to find files over 1 GB.
 - **Dead symlink cleanup** — after migration or reorganization, check the Dead Symlinks tab to find broken links that need fixing.
 - **Schedule scans overnight** — set the preferred time to a low-activity hour (e.g., 2:00 AM) to avoid impacting editing workflows.
-- **Cancel a mistaken scan quickly** — if you drop a huge network folder by accident, use the centered scan overlay’s **Cancel Scan** button before the crawl finishes.
+- **Cancel a mistaken scan quickly** — if you drop a huge network folder by accident, hit **Cancel** in the bottom banner before the crawl finishes. You can keep using the app in the meantime.
+- **Track down large subfolders** — use the By Folder drill-down to click into nested directories and find exactly where storage is concentrated. The loose file listing at each level shows individual file sizes so you can spot the biggest offenders.
