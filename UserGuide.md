@@ -31,7 +31,7 @@ If a volume is unmounted, the app shows the last-known data from the database an
 The sidebar has two sections:
 
 - **Navigation** — Overview, Insights, and Search views
-- **Watched Folders** — all registered folders with last-scan timestamps
+- **Watched Folders** — all registered folders with last-scan timestamps and a volume/location alias; hover a folder to see its complete path
 
 Use the **+** button to add a folder and the **−** button to remove the currently selected folder (with confirmation).
 
@@ -42,6 +42,13 @@ Right-click a folder for options:
 - **Remove** — stop watching and delete scan data (asks for confirmation)
 
 If a scan is already running, new manual scans are blocked until the current one finishes or is cancelled.
+
+If a completed rescan finds zero files or detects a major file/folder-count drop, the app does not replace the saved catalog automatically. The warning offers:
+
+- **Keep Retained Data** — discard the suspicious result and preserve the current files, snapshots, and Insights history.
+- **Wipe and Rebuild from This Scan** — explicitly accept the new result and replace the current catalog for that watched folder.
+
+Use the destructive option only after confirming the source folder, mounted volume, and network connection are complete.
 
 ### Overview
 
@@ -73,7 +80,7 @@ The toolbar also includes **Scan Now** for the selected folder. Starting a scan 
 
 ### Insights
 
-Select a folder and a trend type:
+Select a folder and a trend type. Folder choices include their volume/location alias so identically named folders such as `2026 — Example_NAS` and `2026 — Example_Cloud` remain distinguishable. Hover the control to see the complete watched path.
 - **Total Size** — how total storage has changed over time
 - **By Extension** — track a specific extension (e.g., `mxf`) over time
 - **By Group** — track a group (e.g., "Video") over time
@@ -107,11 +114,21 @@ Click **Save** to add the extension to your local catalog. It immediately appear
 
 **NEW badges:** After a scan discovers extensions you haven't seen before, they appear with a blue "NEW" badge so you can quickly spot and classify them.
 
+#### Exporting Uncategorized Evidence
+
+Use **CSV** or **Copy** in the Uncategorized toolbar, or the corresponding commands in the **Export** menu, to export the currently displayed rows. Search and sort settings therefore control the exported selection and order. Each row includes:
+
+- extension, file count, formatted size, and exact byte size;
+- up to three representative full paths, selected from the largest matching files;
+- enough parent-folder context to help identify camera, application, or workflow-specific files.
+
+Full paths can reveal storage structure. Review the CSV before sharing it outside your organization.
+
 #### Contributing Your Classifications
 
 When you classify extensions that aren't in the app's default catalog, they become contributions you can share to help improve Find File Type for everyone. The contribution bar at the bottom of the Uncategorized tab shows how many custom types you've added.
 
-Two ways to share:
+Contribution export is separate from the uncategorized evidence export. Two ways to share classifications you added:
 - **Export CSV** — saves a CSV file containing only your user-added types (not the built-in defaults). Email this to the developer or attach it to a GitHub issue at [macvfx/Find-File-Type](https://github.com/macvfx/Find-File-Type).
 - **Copy to Clipboard** — copies your contributions in CSV format, ready to paste into a GitHub issue or discussion.
 
@@ -134,11 +151,13 @@ Click the **doc.viewfinder** icon in the menu bar to see a dropdown summary:
 
 Access via the menu bar: **Help > Find File Type Help**. Opens a dedicated help window with a guide covering all features, workflow tips, and keyboard shortcuts.
 
+Use **Find File Type > Check for Updates…** to query releases from [macvfx/Find-File-Type](https://github.com/macvfx/Find-File-Type). Draft releases are never offered. The default configuration follows stable releases; a published prerelease is offered only by builds configured to include prereleases.
+
 ---
 
 ## Settings (Cmd+,)
 
-Access via the app menu: **Find File Types > Settings...**
+Access via the app menu: **Find File Type > Settings...**
 
 ### File Types Tab
 
@@ -168,7 +187,7 @@ Filter by **Group** or **Stage** using the pickers in the header to find specifi
 
 **Include zero-byte files in breakdowns** — off by default. Files that are 0 bytes and not symbolic links are excluded from the type and folder breakdowns so totals reflect actual storage use. Dead symlinks (counted at 0 bytes by design) are always shown. Turn this on if you want to see empty placeholder files in the charts.
 
-**Rebuild Current Data** — deletes all scanned file records, historical snapshots, and last-scan dates, then rescans every watched folder from scratch. It keeps your watched folders, file-type categories, exclusions, alerts, and other settings. Use this when you want to recatalog against updated classification rules or after changing what should be ignored.
+**Rebuild Current Data** — first scans and safety-checks every watched folder without changing saved data. Only after every source succeeds does it delete current file records and historical snapshots and rebuild them from the completed scans. An offline folder, cancellation, zero-file result, or major drop cancels the rebuild and preserves the existing catalog. Watched folders, file-type categories, exclusions, alerts, and other settings are always kept.
 
 **Maximum extension length** — extensions longer than this limit (default: 12 characters) are ignored during scanning, unless they are already in the File Types catalog. This filters out thousands of generated garbage suffixes from Xcode build artifacts, restore fragments, and other tool-generated scratch files. Adjust via the stepper (range: 4–24).
 
@@ -203,7 +222,7 @@ Offline watched-folder failures also appear here conceptually now: when a volume
 
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.5 (build 1)** 
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.6 (build 1)** — see [CHANGELOG.md](CHANGELOG.md) for what changed.
 
 ---
 
@@ -217,8 +236,8 @@ The app ships with 150+ pre-configured file types. Each row layers four classifi
 | Audio | lossless audio, lossy audio, compressed audio, raw audio, audio ringtone, audio project, core audio container | wav, aiff, aifc, flac, caf, pcm, mp3, aac, m4a, m4r, aup3 |
 | Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, cad drawing, thumbnail | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf, otf, dwg, dxf, thm, pict |
 | Documents | document, spreadsheet, tabular data, tab-separated values, fixed-layout document, presentation, screenplay, plain text, markup document, email message, database file, contact card, web archive, text snippet | docx, xlsx, csv, tsv, pdf, pptx, pps, pages, fdx, html, htm, txt, md, eml, emlx, fp7, vcf, url, webarchive, textclipping |
-| Archives | archive, disk image, disc image metadata, installer package, compressed archive, app archive | zip, tar, gz, bz2, 7z, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar |
-| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, shell script, compiled script | fcpbundle, fcpevent, srt, ttml, xml, yml, mhl, xmp, acr, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, sh, scpt |
+| Archives | archive, apple archive, disk image, disc image metadata, installer package, compressed archive, app archive | zip, tar, gz, bz2, 7z, aar, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar |
+| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, shell script, compiled script | fcpbundle, fcpevent, srt, ttml, xml, yml, mhl, xmp, acr, bim, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, sh, scpt |
 
 ### Walkthrough: a `.mov` file
 
@@ -247,7 +266,7 @@ You can add, modify, or remove any of these in **Settings > File Types**. Use **
 
 `~/Library/Application Support/FindFileTypes/findfiletypes.sqlite`
 
-The database uses SQLite with WAL journal mode for safe concurrent reads. Historical snapshots are retained indefinitely. For an in-app refresh, use **Settings > Exclusions > Rebuild Current Data**. To fully wipe everything, quit the app and delete the database file.
+The database uses SQLite with WAL journal mode for safe concurrent reads. File inventory and historical snapshots are retained when a watched source is offline or missing; removing a watched folder through the app is the explicit action that deletes its scan data. For an in-app refresh, use the guarded **Settings > Exclusions > Rebuild Current Data** workflow. To fully wipe everything, quit the app and delete the database file.
 
 ---
 

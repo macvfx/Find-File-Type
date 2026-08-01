@@ -1,16 +1,19 @@
 # Find File Types
 
-A macOS swiftUI app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
+A native macOS app that catalogs and monitors file storage across watched folders — NAS volumes, LucidLink filespaces, SANs, local RAIDs, and USB SSDs.
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.5
+## What's New in 1.6 (build 1)
 
-- **Uncategorized file type classifier** — a new sidebar tab lists every unknown extension sorted by impact, with an inline classification form, autocomplete, and sample file paths for context.
-- **Completion tracking** — a progress bar shows what percentage of your files are categorized, with color-coded thresholds.
-- **Contribute classifications** — export your user-added types as CSV or copy to clipboard to share via GitHub and help improve the default catalog for everyone.
-- **Ignore junk extensions** — hide generated or irrelevant extensions so they don't clutter the list or lower your completion score.
-- **NEW badges** — freshly discovered extensions after each scan are flagged for quick classification.
+- **Retained-data scan safety** — zero-file and major-drop rescans keep the existing catalog until you explicitly approve replacement.
+- **Guarded full rebuilds** — every watched folder is scanned and checked before any current inventory or historical snapshots are removed.
+- **Volume-aware Insights** — identically named folders show their volume/location alias, with the complete path available as hover help.
+- **Uncategorized evidence export** — working CSV and clipboard exports include counts, sizes, and up to three representative paths for context.
+- **New file types** — contributed defaults for Bill of Materials, calendar, FileMaker, OmniGraffle, SNS logs, Swift, Python, configuration, Perl, and RED metadata files.
+- **Reproducible updates and releases** — the updater is pinned to the remote GitHubUpdateChecker 1.0.2 package and the project now includes validated signed/notarized release tooling.
+
+For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Features
 
@@ -25,6 +28,9 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 - **Bundle exclusions** — skip `.fcpbundle`, `.app`, `.photoslibrary` and other bundles (configurable)
 - **Junk-extension filter** — disposable numeric-only suffixes, generated restore fragments, and known junk extensions are ignored during scanning so they do not pollute totals
 - **Historical snapshots** — indefinite retention, trend charts via Swift Charts
+- **Guarded rescans** — zero-file and major file/folder drops retain the prior catalog until you explicitly approve replacement
+- **Volume-aware Insights** — folders with the same name include their storage alias, with the complete path available as hover help
+- **Uncategorized evidence export** — export or copy the displayed unknown extensions with counts, sizes, and up to three representative paths
 - **Menu bar dropdown** — colored pills showing storage breakdown by group, per-folder or all folders
 - **Search** — find files by name, extension, size range across all watched folders
 - **Offline support** — unmounted volumes show last-known data from the database
@@ -33,6 +39,22 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 ## Requirements
 
 - macOS 14.0+
+- Xcode 16.0+
+- Swift 6.0
+
+## Build
+
+Open `FindFileTypes.xcodeproj` in Xcode and build (Cmd+B), or from the terminal:
+
+```bash
+cd FindFileTypes
+swift build
+swift run
+```
+
+The app resolves `GitHubUpdateChecker` from its remote GitHub Swift package at
+the revision recorded in `Package.resolved`. Build machines need package-repo
+access; installed copies of the app do not.
 
 ## Database
 
@@ -48,11 +70,13 @@ Stored in `~/Library/Application Support/FindFileTypes/findfiletypes.sqlite`. Co
 | `file_type_categories` | Extension-to-category/group mapping with colors |
 | `bundle_exclusions` | Extensions to skip during scanning |
 | `busy_windows` | Day/time windows when scanning is deferred |
-| `alert_rules` | Storage threshold alerts (planned) |
+| `alert_rules` | Configured visual storage threshold alerts |
 
 ## Links
 
 - Website: [code.matx.ca](https://code.matx.ca)
+- [User Guide](UserGuide.md)
+- [Workflow Guide](WORKFLOW_GUIDE.md)
 
 ## License
 
