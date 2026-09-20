@@ -42,23 +42,14 @@ For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Requirements
 
-- macOS 14.0+
-- Xcode 16.0+
-- Swift 6.0
+macOS 14.0 or later. Universal binary — Apple silicon and Intel.
 
-## Build
+## Download
 
-Open `FindFileTypes.xcodeproj` in Xcode and build (Cmd+B), or from the terminal:
-
-```bash
-cd FindFileTypes
-swift build
-swift run
-```
-
-The app resolves `GitHubUpdateChecker` from its remote GitHub Swift package at
-the revision recorded in `Package.resolved`. Build machines need package-repo
-access; installed copies of the app do not.
+Signed and notarized builds are on the
+[releases page](https://github.com/macvfx/Find-File-Type/releases/latest). Each
+release ships the disk image and a `.sha256.txt` checksum. The app checks for
+updates on its own and will tell you when a newer version is published.
 
 ## Database
 
