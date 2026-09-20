@@ -22,6 +22,8 @@ Find File Types works with any mounted volume:
 
 If a volume is unmounted, the app shows the last-known data from the database and marks the folder with a warning icon.
 
+There is no practical limit on folder size. A scan writes what it finds to the database as it goes rather than holding the results in memory, so watching the top level of a large share costs the app no more memory than watching a small local folder. Scanning a share with millions of files still takes time, and the progress counter keeps moving throughout.
+
 ---
 
 ## Main Window
@@ -266,7 +268,9 @@ You can add, modify, or remove any of these in **Settings > File Types**. Use **
 
 `~/Library/Application Support/FindFileTypes/findfiletypes.sqlite`
 
-The database uses SQLite with WAL journal mode for safe concurrent reads. File inventory and historical snapshots are retained when a watched source is offline or missing; removing a watched folder through the app is the explicit action that deletes its scan data. For an in-app refresh, use the guarded **Settings > Exclusions > Rebuild Current Data** workflow. To fully wipe everything, quit the app and delete the database file.
+The database uses SQLite with WAL journal mode for safe concurrent reads. File inventory and historical snapshots are retained when a watched source is offline or missing; removing a watched folder through the app is the explicit action that deletes its scan data.
+
+A scan in progress writes into a separate staging area, and those rows are merged into the catalog only once the scan finishes and you accept the result. That is what lets the retained-data safety prompt promise that nothing has changed yet: if you choose **Keep Retained Data**, the staged rows are simply dropped. Staged rows from a scan that never finished are discarded the next time the app launches. For an in-app refresh, use the guarded **Settings > Exclusions > Rebuild Current Data** workflow. To fully wipe everything, quit the app and delete the database file.
 
 ---
 

@@ -2,6 +2,82 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.1] — 2026-09-20 (build 1)
+
+Scanning a very large folder could exhaust application memory and have the app
+killed by the system before the scan finished. Watching the top level of a big
+share is now no more expensive than watching a small local folder.
+
+### Fixed
+
+- Scans no longer run out of memory. The scan used to buffer every file it
+  found in RAM and write the whole list to the database only at the end, which
+  cost roughly 1 KB per file — around 5 GB on a five-million-file network
+  share. Files are now streamed to the database in batches as they are found,
+  so peak memory is set by the batch size rather than by the size of the
+  folder. Measured on a 71,000-file tree: 67 MB before, 5 MB after, and the
+  figure stays flat as the folder grows.
+- The scan loop now releases each file's temporary system objects as it goes.
+  It previously held all of them until the scan ended — about 284 bytes per
+  file that nothing could reclaim — because the loop never yields.
+- Committing a finished scan no longer blocks the interface. The merge runs off
+  the main thread, so the app stays responsive while a large catalog is
+  written, and accepting a scan from the safety prompt now shows progress
+  rather than appearing to hang.
+- Rebuild Current Data no longer holds every folder's complete file list at
+  once while it preflights them, which multiplied the memory cost by the number
+  of watched folders.
+- Searching for a filename containing an apostrophe or quotation mark returned
+  nothing instead of matching. Search text is now passed to the database as a
+  value rather than spliced into the query, and `%` and `_` in a search are
+  matched literally instead of acting as wildcards.
+- A file whose path contained the watched folder's full path a second time had
+  that second copy stripped out too, and the surrounding separators with it: in
+  a backup or proxy tree mirroring the volume layout, `Jobs/backup/Volumes/
+  Jobs/clip.mov` was recorded as `backupclip.mov`. Only the leading path is
+  removed now.
+- The dead-symlink and file lists are capped at 1,000 rows on screen instead of
+  loading an entire directory into memory. Both views report the true total,
+  say when more exists than is shown, and CSV export still writes the complete
+  list.
+
+### Changed
+
+- Scan results are staged in a new `files_staging` table and only merged into
+  the catalog once a scan is accepted. The retained-data safety review is
+  unaffected: choosing **Keep Retained Data** discards the staged rows and the
+  live catalog is still never touched until **Wipe and Rebuild** is confirmed.
+  Staged rows from an interrupted scan are discarded at launch.
+- All database text bindings now copy their values (`SQLITE_TRANSIENT`). The
+  previous bindings pointed at temporary buffers and were only safe because
+  nothing released them mid-transaction — an assumption that batching and
+  autorelease pools break.
+
+### Build
+
+- Version 1.7.1, build 1; release tag `1.7.1+1`.
+
+---
+
+## [1.7] — 2026-09-08 (build 1)
+
+### Changed
+
+- Help section headings use bold accent-colored labels and tinted backgrounds for easier scanning, with accessibility heading traits.
+- Sidebar and detail panes have explicit width constraints; internal chart/table panes have bounded rendering. Minimum window width is now 980 points.
+
+### Added
+
+- Default classifications for `.aup`, `.m3u`, `.tvdb`, `.sqlite`, `.sqlite-shm`, `.sqlite-wal`, `.moef`, `.sha256`, and `.tag`.
+- Camera metadata defaults for `.cpf`, `.scr`, `.bin`, `.ppn`, `.sav`, `.gis`, `.bnp`, `.inp`, `.int`, `.bk`, `.dsc`, and `.bdm` under Projects / Ingest. These extension-based defaults reflect camera-card workflows; other uses are possible.
+- Existing custom classifications are preserved when the new defaults load.
+
+### Build
+
+- Version 1.7, build 1; release tag `1.7+1`.
+
+---
+
 ## [1.6] — 2026-07-31 (build 1)
 
 Protect retained scan history when storage is unavailable or unexpectedly

@@ -4,14 +4,18 @@ A native macOS app that catalogs and monitors file storage across watched folder
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.6 (build 1)
+## What's New in 1.7.1 (build 1)
 
-- **Retained-data scan safety** — zero-file and major-drop rescans keep the existing catalog until you explicitly approve replacement.
-- **Guarded full rebuilds** — every watched folder is scanned and checked before any current inventory or historical snapshots are removed.
-- **Volume-aware Insights** — identically named folders show their volume/location alias, with the complete path available as hover help.
-- **Uncategorized evidence export** — working CSV and clipboard exports include counts, sizes, and up to three representative paths for context.
-- **New file types** — contributed defaults for Bill of Materials, calendar, FileMaker, OmniGraffle, SNS logs, Swift, Python, configuration, Perl, and RED metadata files.
-- **Reproducible updates and releases** — the updater is pinned to the remote GitHubUpdateChecker 1.0.2 package and the project now includes validated signed/notarized release tooling.
+- **Large folders no longer run out of memory** — a scan used to hold every file it found in memory until it finished, costing around 1 KB per file. Files are now written to the database as they are found, so peak memory is set by the batch size rather than the size of the folder. Watching the top level of a multi-million-file share is now no more expensive than watching a small local one.
+- **The app stays responsive while a scan is saved** — the catalog write runs off the main thread.
+- **Search matches names containing quotes** — a filename with an apostrophe previously returned nothing; `%` and `_` in a search are now matched literally.
+- **Accurate paths in mirrored trees** — a file whose path repeated the watched folder's full path (a backup or proxy tree mirroring the volume layout) had that repeat stripped from its recorded path.
+- **Bounded file lists** — the dead-symlink and file lists show the first 1,000 rows and report the true total; CSV export still writes the complete list.
+
+### Since 1.6
+
+- **Clearer Help and steadier layout** — bold accent-colored Help headings, explicit width constraints on the sidebar and detail panes, and a 980-point minimum window width.
+- **More file types** — defaults for Audacity, playlist, TV database, SQLite, checksum and tag files, plus camera-card metadata under Projects / Ingest. Existing custom classifications are preserved.
 
 For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 
@@ -64,6 +68,7 @@ Stored in `~/Library/Application Support/FindFileTypes/findfiletypes.sqlite`. Co
 |-------|---------|
 | `watched_folders` | Registered folder paths, schedules, last scan date |
 | `files` | Current file inventory (upserted each scan) |
+| `files_staging` | Rows written during a scan in progress, merged into `files` only once the scan is accepted |
 | `scan_snapshots` | Aggregate totals per scan for historical tracking |
 | `snapshot_type_summary` | Per-extension breakdown per snapshot |
 | `snapshot_folder_summary` | Per-subfolder breakdown per snapshot |
