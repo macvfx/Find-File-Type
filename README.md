@@ -4,13 +4,15 @@ A native macOS app that catalogs and monitors file storage across watched folder
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.7.1 (build 1)
+## What's New in 1.7.1 (build 2)
 
 - **Large folders no longer run out of memory** — a scan used to hold every file it found in memory until it finished, costing around 1 KB per file. Files are now written to the database as they are found, so peak memory is set by the batch size rather than the size of the folder. Watching the top level of a multi-million-file share is now no more expensive than watching a small local one.
 - **The app stays responsive while a scan is saved** — the catalog write runs off the main thread.
 - **Search matches names containing quotes** — a filename with an apostrophe previously returned nothing; `%` and `_` in a search are now matched literally.
 - **Accurate paths in mirrored trees** — a file whose path repeated the watched folder's full path (a backup or proxy tree mirroring the volume layout) had that repeat stripped from its recorded path.
 - **Bounded file lists** — the dead-symlink and file lists show the first 1,000 rows and report the true total; CSV export still writes the complete list.
+- **No more flashing scan banner** (build 2) — a folder on an unmounted volume retried its scheduled scan every 15 seconds, showing and hiding the scanning banner each time. The retry is now counted from when the scan started.
+- **The View label no longer wraps** (build 2) — it shared its width with the segmented control beside it and broke mid-word.
 
 ### Since 1.6
 

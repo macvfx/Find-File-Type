@@ -2,6 +2,31 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.1] — 2026-09-20 (build 2)
+
+### Fixed
+
+- The scanning banner flashed on and off every few seconds. A scheduled scan
+  rescheduled itself by re-reading the folder's stored last-scan date
+  immediately after launching the scan — but the scan writes that date only
+  when it finishes, so the folder still looked overdue and the next run was set
+  15 seconds out. For a folder whose scan can never record a date, such as one
+  on an unmounted volume or a cancelled scan, that became a permanent
+  15-second loop: each pass started a scan that failed instantly, showing and
+  hiding the banner. With the volume's offline notice set to "ignore always",
+  the flash was the only visible sign. The reschedule now counts from when the
+  scan started. The catch-up for a genuinely overdue folder is unchanged.
+- The **View** label above the folder tabs wrapped mid-word to "Vie / w". A
+  picker's label shares its frame with the control, and the segmented control's
+  three titles claimed nearly all 300 points. The label is drawn separately now
+  and the built-in one hidden, which keeps it for VoiceOver.
+
+### Build
+
+- Version 1.7.1, build 2; release tag `1.7.1+2`.
+
+---
+
 ## [1.7.1] — 2026-09-20 (build 1)
 
 Scanning a very large folder could exhaust application memory and have the app

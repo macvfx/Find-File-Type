@@ -1,6 +1,6 @@
-# Find File Type 1.7.1 (build 1)
+# Find File Type 1.7.1 (build 2)
 
-A memory fix for large folders, plus three smaller corrections.
+A memory fix for large folders, plus smaller corrections.
 
 ## Scans no longer run out of memory
 
@@ -46,6 +46,21 @@ path is removed now.
 The dead-symlink and file lists loaded an entire directory into memory. Both now
 show the first 1,000 rows, report the true total, and say when there is more.
 CSV export still writes the complete list.
+
+## Fixed in build 2
+
+The scanning banner along the bottom of the window flashed on and off every few
+seconds. A scheduled scan worked out its next run by re-reading the folder's
+stored last-scan date straight after starting the scan — but that date is
+written only when a scan finishes, so the folder still looked overdue and the
+next run was set 15 seconds away. A folder whose scan can never record a date,
+such as one on a volume that is no longer mounted, retried forever, and because
+those scans fail immediately the banner appeared and vanished each time. If the
+volume's offline notice was set to ignore always, the flash was the only sign
+anything was happening. The next run is now counted from when the scan started.
+
+The **View** label above the folder tabs wrapped mid-word to "Vie / w", because
+it shared its width with the segmented control beside it.
 
 ## Requirements
 
