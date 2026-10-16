@@ -79,3 +79,9 @@ Stored in `~/Library/Application Support/FindFileTypes/findfiletypes.sqlite`. Co
 ## License
 
 Copyright 2026 Mat X. All rights reserved.
+
+## License
+
+Free to use for your own business or work, including on client jobs. You may not sell,
+redistribute or sublicense the software. The terms are the
+[PolyForm Internal Use License 1.0.0](LICENSE).
