@@ -2,6 +2,47 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.2] — 2026-10-26 (build 3)
+
+### Added
+
+Fourteen extensions reported as unrecognized are now classified out of the box:
+
+- **`.itt`** — Apple iTunes Timed Text subtitle/caption (TTML-based; used for iTunes
+  Store / Apple TV delivery and imported/exported by Final Cut Pro).
+- **`.ttc`** — TrueType Collection font bundle; flagged niche since apps such as
+  InDesign need the fonts converted to standalone `.ttf` first.
+- **`.aet`** — Adobe After Effects project template (binary variant of `.aep`).
+- **`.avif`** — AV1 Image File Format, a modern high-efficiency still image codec.
+- **`.glb`** — binary glTF 3D model asset.
+- **`.dotx`** — Microsoft Word template.
+- **`.acsm`** / **`.acsi`** — classified as a proprietary security camera
+  recording export and its paired index/sidecar, based on client footage;
+  likely from Axis Communications camera/companion software, though the exact
+  producing app isn't fully confirmed, so both are flagged to confirm from
+  content. (Note: `.acsm` is also a separate, unrelated, widely-documented
+  Adobe Content Server Message / ebook DRM format elsewhere — the two share an
+  extension by coincidence.)
+- **`.fileslack`** — classified as a generic recovered-data fragment. Seen as a
+  compound suffix appended after an existing extension (e.g. a recovered Axis
+  security-camera export named `<name>.acsm.fileslack`), consistent with a
+  forensic/data-recovery tool marking a fragment pulled from filesystem slack
+  space; since the scanner matches only the final suffix, the underlying
+  file's real type is lost once `.fileslack` is appended.
+- **`.nupkg`** — NuGet software package (zip-based .NET package archive), also
+  seen as the installer/update package for Squirrel-based Windows installers
+  such as the Axis Companion installer.
+- **`.zop`** — classified as a plain ZIP archive: renaming a sample to `.zip`
+  expanded it normally, so it's likely a mistyped or deliberately renamed
+  `.zip` rather than a distinct format. Older references also tie the
+  extension to legacy ZipIt archives, Zope packages, and ZoneAlarm-quarantined
+  attachments, so it's still flagged niche to confirm from content if unsure.
+- **`.err`** — generic application error log.
+- **`.manifest`** — generic manifest file; meaning depends on the producing app
+  (web app manifest, package manifest, assembly manifest, etc.).
+- **`.fcpcopy`** — Final Cut Pro's transient file written while copying media into
+  a library; should not persist once the copy completes.
+
 ## [1.7.1] — 2026-09-20 (build 2)
 
 ### Fixed

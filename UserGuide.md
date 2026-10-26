@@ -224,22 +224,22 @@ Offline watched-folder failures also appear here conceptually now: when a volume
 
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.6 (build 1)** — see [CHANGELOG.md](CHANGELOG.md) for what changed.
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.7.2 (build 3)** — see [CHANGELOG.md](CHANGELOG.md) for what changed.
 
 ---
 
 ## File Type Categories
 
-The app ships with 150+ pre-configured file types. Each row layers four classification axes — Group, Category, Stage, Role — plus optional legacy/niche flags and notes.
+The app ships with 200+ pre-configured file types. Each row layers four classification axes — Group, Category, Stage, Role — plus optional legacy/niche flags and notes.
 
 | Group | Example Categories | Example Extensions |
 |-------|-------------------|-------------------|
-| Video | professional container, camera raw, video container, project file, motion graphics project, delivery video, transport stream, proxy video | mxf, r3d, braw, ari, mov, qt, prproj, aep, mp4, mkv, ts, mts, m2ts, lrv, lrf |
+| Video | professional container, camera raw, video container, project file, motion graphics project, motion graphics template, delivery video, transport stream, proxy video, security camera export | mxf, r3d, braw, ari, mov, qt, prproj, aep, aet, mp4, mkv, ts, mts, m2ts, lrv, lrf, acsm, acsi |
 | Audio | lossless audio, lossy audio, compressed audio, raw audio, audio ringtone, audio project, core audio container | wav, aiff, aifc, flac, caf, pcm, mp3, aac, m4a, m4r, aup3 |
-| Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, cad drawing, thumbnail | cr3, nef, arw, dng, psd, ai, indd, jpg, svg, exr, dpx, ttf, otf, dwg, dxf, thm, pict |
-| Documents | document, spreadsheet, tabular data, tab-separated values, fixed-layout document, presentation, screenplay, plain text, markup document, email message, database file, contact card, web archive, text snippet | docx, xlsx, csv, tsv, pdf, pptx, pps, pages, fdx, html, htm, txt, md, eml, emlx, fp7, vcf, url, webarchive, textclipping |
-| Archives | archive, apple archive, disk image, disc image metadata, installer package, compressed archive, app archive | zip, tar, gz, bz2, 7z, aar, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar |
-| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, shell script, compiled script | fcpbundle, fcpevent, srt, ttml, xml, yml, mhl, xmp, acr, bim, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, sh, scpt |
+| Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, font collection, 3D model asset, cad drawing, thumbnail | cr3, nef, arw, dng, psd, ai, indd, jpg, avif, svg, exr, dpx, ttf, otf, ttc, glb, dwg, dxf, thm, pict |
+| Documents | document, document template, spreadsheet, tabular data, tab-separated values, fixed-layout document, presentation, screenplay, plain text, markup document, email message, database file, contact card, web archive, text snippet | docx, dotx, xlsx, csv, tsv, pdf, pptx, pps, pages, fdx, html, htm, txt, md, eml, emlx, fp7, vcf, url, webarchive, textclipping |
+| Archives | archive, apple archive, disk image, disc image metadata, installer package, compressed archive, app archive, software package | zip, tar, gz, bz2, 7z, aar, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar, nupkg, zop |
+| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, error log, manifest file, transient copy file, shell script, compiled script | fcpbundle, fcpevent, srt, ttml, itt, xml, yml, mhl, xmp, acr, bim, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, err, manifest, fcpcopy, sh, scpt |
 
 ### Walkthrough: a `.mov` file
 

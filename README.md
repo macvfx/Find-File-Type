@@ -4,18 +4,13 @@ A native macOS app that catalogs and monitors file storage across watched folder
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.7.1 (build 2)
+## What's New in 1.7.2 (build 3)
 
-- **Large folders no longer run out of memory** — a scan used to hold every file it found in memory until it finished, costing around 1 KB per file. Files are now written to the database as they are found, so peak memory is set by the batch size rather than the size of the folder. Watching the top level of a multi-million-file share is now no more expensive than watching a small local one.
-- **The app stays responsive while a scan is saved** — the catalog write runs off the main thread.
-- **Search matches names containing quotes** — a filename with an apostrophe previously returned nothing; `%` and `_` in a search are now matched literally.
-- **Accurate paths in mirrored trees** — a file whose path repeated the watched folder's full path (a backup or proxy tree mirroring the volume layout) had that repeat stripped from its recorded path.
-- **Bounded file lists** — the dead-symlink and file lists show the first 1,000 rows and report the true total; CSV export still writes the complete list.
-- **No more flashing scan banner** (build 2) — a folder on an unmounted volume retried its scheduled scan every 15 seconds, showing and hiding the scanning banner each time. The retry is now counted from when the scan started.
-- **The View label no longer wraps** (build 2) — it shared its width with the segmented control beside it and broke mid-word.
+- **14 more file types recognized** — `.itt`, `.ttc`, `.aet`, `.avif`, `.glb`, `.dotx`, `.acsm`, `.acsi`, `.fileslack`, `.nupkg`, `.zop`, `.err`, `.manifest`, and `.fcpcopy`, including a proprietary security-camera export (`.acsm`/`.acsi`) and its recovered-fragment suffix (`.fileslack`). Existing custom classifications are preserved. See [RELEASE-NOTES-1.7.2.md](RELEASE-NOTES-1.7.2.md) for details on each one.
 
 ### Since 1.6
 
+- **Large folders no longer run out of memory**, search matches names containing quotes, mirrored-tree paths are accurate, and file lists are bounded with an accurate total. See [RELEASE-NOTES-1.7.1.md](RELEASE-NOTES-1.7.1.md).
 - **Clearer Help and steadier layout** — bold accent-colored Help headings, explicit width constraints on the sidebar and detail panes, and a 980-point minimum window width.
 - **More file types** — defaults for Audacity, playlist, TV database, SQLite, checksum and tag files, plus camera-card metadata under Projects / Ingest. Existing custom classifications are preserved.
 
@@ -26,7 +21,7 @@ For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 - **Drag-and-drop** folder watching — or use the +/− toolbar buttons
 - **Cancelable scans** — every manual scan shows a non-blocking bottom banner with a `Cancel` button
 - **Four-axis classification** — Group (Video, Audio, Images, Documents, Archives, Projects), Category (structural file-type class), Stage (Preproduction → Archive workflow lifecycle), Role (what the file is used for)
-- **150+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
+- **200+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
 - **Inline-editable categories** — edit any cell, reset a row to its default, bulk import/export the category schema as CSV
 - **Scheduled scanning** — hourly, daily, or weekly with preferred time and busy-window support (same scheduling model as BackupTrust)
 - **Symbolic link awareness** — symlinks counted at 0 bytes, dead symlinks flagged in a dedicated view
