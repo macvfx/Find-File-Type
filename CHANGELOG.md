@@ -2,6 +2,83 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.3] — 2026-11-03 (build 1)
+
+### Docs
+
+- The User Guide, Workflow Guide, README, and in-app Help description of
+  the retained-data safety dialog only mentioned the zero-file and
+  major-drop triggers, which went stale once build 6 added the read-error
+  trigger and the folder name in the dialog's title. Updated all four to
+  describe the current behavior.
+
+### Fixed
+
+- The sidebar's **+**/**−** (add/remove watched folder) toolbar buttons
+  could get clipped if the sidebar column was dragged near its minimum
+  width. Raised the column's minimum from 200 to 240 points so the buttons
+  always stay visible; the sidebar toggle still collapses the column
+  entirely for anyone who wants it gone.
+
+## [1.7.2] — 2026-11-03 (build 7)
+
+### Fixed
+
+- Removing a watched folder while its "Large Scan Change Detected" dialog
+  was still open left the dialog pointing at a folder that no longer
+  existed; accepting it afterward tried to write a snapshot for a deleted
+  `folder_id`, silently rejected by the foreign key. Removing a folder now
+  dismisses its own pending dialog and cancels its in-flight scan, if any.
+
+### Docs
+
+- `TODO.md` pruned of the long-shipped v1.0/v1.1 checklists (see
+  `CHANGELOG.md` for that history) and regrouped by theme instead of a stale
+  version-number roadmap that the app's actual releases outran.
+
+## [1.7.2] — 2026-11-03 (build 6)
+
+### Fixed
+
+- Scans on a NAS, LucidLink filespace, or any network/cloud mount could trip
+  "Large Scan Change Detected" without any real data loss, for two reasons:
+  - `FileManager`'s enumerator had no error handler, so a permission error,
+    a stale network handle, or a file removed mid-scan was silently skipped
+    with no trace at all — the resulting undercount then looked like a real
+    drop. The scanner now counts these and the warning says so ("This scan
+    could not read N item(s)...") instead of presenting a bare percentage.
+    A scan that hit any read errors is now always flagged for review before
+    it's allowed to merge, even if the drop itself doesn't cross the normal
+    threshold — merging an incomplete scan would otherwise delete catalog
+    rows for files that are still there.
+  - The safety check compared against `totalFiles`/`folderSummaries`, which
+    exclude zero-byte files by design (see 1.1's "Zero-byte filter"). A
+    folder on a slow network mount, or one with files mid-sync, can have a
+    wave of files transiently report 0 bytes without anything really being
+    deleted — and a folder made entirely of such files used to disappear
+    from the comparison's folder count too. The check now compares against
+    a true, unfiltered count tracked specifically for this purpose; the
+    zero-byte filter itself is unchanged for breakdowns and history.
+
+## [1.7.2] — 2026-11-03 (build 5)
+
+### Fixed
+
+- The "Large Scan Change Detected" alert's title was still generic, so the
+  folder name added to the message body (build 4) could still be missed.
+  The dialog's title now names the folder too, so it can't be mistaken for
+  a different folder's scheduled scan.
+
+## [1.7.2] — 2026-11-03 (build 4)
+
+### Fixed
+
+- The "Large Scan Change Detected" alert never said which watched folder it
+  was about. The underlying check compares totals for one specific folder,
+  and that folder was already carried on the pending-replacement data —
+  it just wasn't included in the message shown to the user. The alert now
+  names the folder (and its path).
+
 ## [1.7.2] — 2026-10-26 (build 3)
 
 ### Added

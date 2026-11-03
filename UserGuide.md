@@ -45,7 +45,7 @@ Right-click a folder for options:
 
 If a scan is already running, new manual scans are blocked until the current one finishes or is cancelled.
 
-If a completed rescan finds zero files or detects a major file/folder-count drop, the app does not replace the saved catalog automatically. The warning offers:
+If a completed rescan finds zero files, detects a major file/folder-count drop, or hits read errors partway through (a permission problem or a network interruption, which can make the scan incomplete rather than reflecting a real change), the app does not replace the saved catalog automatically. The dialog names the watched folder it's about and offers:
 
 - **Keep Retained Data** — discard the suspicious result and preserve the current files, snapshots, and Insights history.
 - **Wipe and Rebuild from This Scan** — explicitly accept the new result and replace the current catalog for that watched folder.

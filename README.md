@@ -4,12 +4,14 @@ A native macOS app that catalogs and monitors file storage across watched folder
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.7.2 (build 3)
+## What's New in 1.7.3 (build 1)
 
-- **14 more file types recognized** — `.itt`, `.ttc`, `.aet`, `.avif`, `.glb`, `.dotx`, `.acsm`, `.acsi`, `.fileslack`, `.nupkg`, `.zop`, `.err`, `.manifest`, and `.fcpcopy`, including a proprietary security-camera export (`.acsm`/`.acsi`) and its recovered-fragment suffix (`.fileslack`). Existing custom classifications are preserved. See [RELEASE-NOTES-1.7.2.md](RELEASE-NOTES-1.7.2.md) for details on each one.
+- **A more trustworthy retained-data safety dialog** — it now also catches a scan that hit read errors (a permission problem or network interruption) partway through, even when the resulting drop looks small, and always names which watched folder it's about. A related fix stops a network share's sync hiccups (files briefly reporting 0 bytes) from being mistaken for missing data. See [RELEASE-NOTES-1.7.3.md](RELEASE-NOTES-1.7.3.md) for details.
+- **Sidebar add/remove buttons stay visible** — the **+**/**−** buttons above the sidebar no longer get clipped when the sidebar is dragged narrow.
 
 ### Since 1.6
 
+- **14 more file types recognized** in 1.7.2, including a proprietary security-camera export and its recovered-fragment suffix. See [RELEASE-NOTES-1.7.2.md](RELEASE-NOTES-1.7.2.md).
 - **Large folders no longer run out of memory**, search matches names containing quotes, mirrored-tree paths are accurate, and file lists are bounded with an accurate total. See [RELEASE-NOTES-1.7.1.md](RELEASE-NOTES-1.7.1.md).
 - **Clearer Help and steadier layout** — bold accent-colored Help headings, explicit width constraints on the sidebar and detail panes, and a 980-point minimum window width.
 - **More file types** — defaults for Audacity, playlist, TV database, SQLite, checksum and tag files, plus camera-card metadata under Projects / Ingest. Existing custom classifications are preserved.
@@ -29,7 +31,7 @@ For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 - **Bundle exclusions** — skip `.fcpbundle`, `.app`, `.photoslibrary` and other bundles (configurable)
 - **Junk-extension filter** — disposable numeric-only suffixes, generated restore fragments, and known junk extensions are ignored during scanning so they do not pollute totals
 - **Historical snapshots** — indefinite retention, trend charts via Swift Charts
-- **Guarded rescans** — zero-file and major file/folder drops retain the prior catalog until you explicitly approve replacement
+- **Guarded rescans** — a zero-file result, a major file/folder drop, or read errors partway through retain the prior catalog until you explicitly approve replacement; the review dialog names the watched folder
 - **Volume-aware Insights** — folders with the same name include their storage alias, with the complete path available as hover help
 - **Uncategorized evidence export** — export or copy the displayed unknown extensions with counts, sizes, and up to three representative paths
 - **Menu bar dropdown** — colored pills showing storage breakdown by group, per-folder or all folders

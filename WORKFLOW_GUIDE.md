@@ -11,7 +11,7 @@ flowchart TD
     B --> C{"Source available and result plausible?"}
     C -->|"Yes"| D["Save current inventory and snapshot"]
     C -->|"Offline or cancelled"| E["Keep retained catalog"]
-    C -->|"Zero files or major drop"| F{"Operator review"}
+    C -->|"Zero files, major drop, or read errors"| F{"Operator review"}
     F -->|"Keep Retained Data"| E
     F -->|"Wipe and Rebuild"| D
     D --> G["Review By Type and By Folder"]
@@ -31,8 +31,11 @@ flowchart TD
 
 ## When storage is missing or incomplete
 
-An unavailable source does not erase its saved data. A zero-file or major-drop
-scan also remains non-destructive until you explicitly approve replacement.
+An unavailable source does not erase its saved data. A zero-file scan, a
+major file/folder-count drop, or a scan that hit read errors partway through
+also remains non-destructive until you explicitly approve replacement — the
+review dialog names the watched folder and, for read errors, how many items
+it couldn't read.
 
 - Choose **Keep Retained Data** when a volume may be offline, partially mounted,
   or still synchronizing.
