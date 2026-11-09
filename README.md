@@ -4,7 +4,12 @@ A native macOS app that catalogs and monitors file storage across watched folder
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.7.3 (build 1)
+## What's New in 1.7.4 (build 1)
+
+- **By Folder is one clear list** — each folder shows its name, file count, size and a bar on the same row, long names wrap instead of being cut off, and only the 10 largest folders show at first with a **Show all** button for the rest. See [RELEASE-NOTES-1.7.4.md](RELEASE-NOTES-1.7.4.md).
+- **Steadier view switcher** — the By Type / By Folder / Dead Symlinks control no longer stretches and snaps back when you change view or watched folder.
+
+### Since 1.7.3
 
 - **A more trustworthy retained-data safety dialog** — it now also catches a scan that hit read errors (a permission problem or network interruption) partway through, even when the resulting drop looks small, and always names which watched folder it's about. A related fix stops a network share's sync hiccups (files briefly reporting 0 bytes) from being mistaken for missing data. See [RELEASE-NOTES-1.7.3.md](RELEASE-NOTES-1.7.3.md) for details.
 - **Sidebar add/remove buttons stay visible** — the **+**/**−** buttons above the sidebar no longer get clipped when the sidebar is dragged narrow.

@@ -2,6 +2,38 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.4] — 2026-11-09 (build 1)
+
+### Changed
+
+- **By Folder** is now a single list instead of a bar chart beside a second
+  list that repeated the same folders. Each row shows the folder name, its
+  file count and size, and a bar scaled to the largest folder. Long folder
+  and file names wrap onto a second line (previously the chart's axis
+  truncated them) and show in full on hover.
+- Only the 10 largest folders show at first, with a **Show all N folders**
+  button; the list collapses again when you open a different folder. Without
+  the cap, a long folder list pushed the "Files in this folder" section out
+  of sight.
+- The segmented view switcher no longer carries a visible "View" label; the
+  segment names say what it does, and the label is kept for VoiceOver.
+
+### Fixed
+
+- In By Folder, folder names were drawn above their bars by the chart axis,
+  so it was unclear which name belonged to which bar. Names now sit on the
+  same row as their bar.
+- The By Type / By Folder / Dead Symlinks control stretched its selection
+  to the left and snapped back every time the view or the watched folder
+  changed. Cause: the system segmented control animates its selection pill,
+  and SwiftUI offers no way to switch that off, so it is now drawn from plain
+  buttons that change instantly.
+
+### Docs
+
+- User Guide and in-app Help describe the single-list By Folder view, the
+  10-folder cap and the long-name behavior.
+
 ## [1.7.3] — 2026-11-03 (build 1)
 
 ### Docs

@@ -67,14 +67,16 @@ On launch, the app auto-selects your first watched folder and preloads its data,
 
 Three tabs:
 - **By Type** — pie chart and table showing storage breakdown by file extension, with category and group labels
-- **By Folder** — horizontal bar chart and list showing storage per subfolder, with interactive drill-down (see below)
+- **By Folder** — a single list of subfolders, each with a bar showing its share of the space, its file count and its size, with interactive drill-down (see below)
 - **Dead Symlinks** — list of symbolic links pointing to non-existent targets
 
 #### Folder Drill-Down
 
-Click any subfolder name in the list (or tap its bar in the chart) to drill into that directory. The view updates to show the selected folder's immediate children — subfolders appear first as clickable blue links, followed by a "Files" section listing individual files at that level with their name, extension, and size.
+Click any subfolder row to drill into that directory. The view updates to show the selected folder's immediate children — subfolders appear first, each with a bar scaled to the largest folder at that level, followed by a "Files in this folder" section listing individual files at that level with their name, extension, and size.
 
-A **breadcrumb trail** (e.g. Root > ProjectA > src) appears above the chart when you've drilled in. Click any segment to jump back to that level, or click **Root** to return to the top.
+Only the **10 largest folders** are shown at first, so the files section is never pushed far down the page. When a folder has more, a **Show all N folders** button under the list expands it, and **Show fewer folders** collapses it again. The list also collapses whenever you open a different folder. Long folder and file names wrap onto a second line; hover over a name to see it in full.
+
+A **breadcrumb trail** (e.g. Root > ProjectA > src) appears above the list when you've drilled in. Click any segment to jump back to that level, or click **Root** to return to the top.
 
 The summary footer at the bottom shows the subfolder count, loose file count, total files (including nested), and combined size for the current level.
 
