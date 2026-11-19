@@ -2,6 +2,54 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.6] — 2026-11-19 (build 1)
+
+### Added
+
+- 76 more file types are now recognised, found by scanning a real working Mac:
+  - **Encrypted archive:** `aea`, the Apple Encrypted Archive format. It is
+    filed under Archives so encrypted backups are counted as archives, with a
+    note that they cannot be opened without their key.
+  - **Shell script:** `s`, treated as a shell script whose `.sh` extension was cut
+    short.
+  - **Source code:** `c`, `h`, `go`, `rb`, `php`, `sql`, `mjs`, `cjs`, `cts`,
+    `patch`, `ipynb` (notebooks), `dtd` and `jsonp`.
+  - **Files that tools regenerate:** `pyc`, `pyz`, `map`, `toc`, `mmap2` and
+    `xcuserstate` join the *regenerable build output* role from 1.7.5. The
+    notes say why each is safe to delete.
+  - **Xcode project files:** `pbxproj`, `xcscheme`, `xcconfig`, `entitlements`,
+    `xcplayground`, `xcbkptlist`, `storyboard`, `nib`, `strings` and `resolved`
+    get a shared role, *Xcode project file*, so they are easy to tell apart
+    from the build leftovers.
+  - **Backup copies:** `bak`, `backup`, `json_backup`, `log_backup`,
+    `mhl_backup`, `txt_backup` and `csv_backup` share the category
+    *backup copy*, since the same few suffixes turned up in many folders.
+  - **Settings and process files:** `cfg`, `cnf`, `ini`, `env`, `example`,
+    `template`, `in`, `pid`, `enabled`, `sample`, `term`. The `env` note warns
+    that these files can contain secrets.
+  - **Logs, reports and databases:** `diag`, `hang`, `ips`, `xlog`, `db-shm`,
+    `db-wal`, `sqlite3`, `itdb`, `musicdb`. Hang reports can be tens of
+    megabytes each.
+  - **Installer parts:** `info`, `sizes`, `pkginfo`, `spk`, `qs`, plus `helper`
+    tools, `plugin` and `spec`.
+  - **Documents and other:** `rackplan`, `comiclife`, `scap` (mind maps),
+    `nskprofile`, `pkpasses`, `tab`, `mmd`, `pdfp`, `bcmap`, `pem`.
+
+### Fixed
+
+- In the Uncategorized tab the word "Sort" was squeezed into one letter per
+  line when the window was narrow. Cause: the sort control's built-in label
+  was allowed to shrink to nothing while the three buttons next to it kept
+  their width. The label is now a fixed-size piece of text beside the control,
+  and the built-in label is hidden and kept for VoiceOver.
+
+### Notes
+
+- Existing databases pick up the new types the next time the app starts. Any
+  category you edited yourself is left as you set it.
+- Deliberately not added: git version-tag names such as `.0-dev` and `.1-dev`.
+  They look like extensions but are not file types.
+
 ## [1.7.5] — 2026-11-18 (build 1)
 
 ### Added

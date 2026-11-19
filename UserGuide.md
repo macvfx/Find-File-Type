@@ -226,13 +226,13 @@ Offline watched-folder failures also appear here conceptually now: when a volume
 
 ### About Tab
 
-Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.7.5 (build 1)** — see [CHANGELOG.md](CHANGELOG.md) for what changed.
+Shows app version, build number, copyright, and link to [code.matx.ca](https://code.matx.ca). Current release: **1.7.6 (build 1)** — see [CHANGELOG.md](CHANGELOG.md) for what changed.
 
 ---
 
 ## File Type Categories
 
-The app ships with 270+ pre-configured file types. Each row layers four classification axes — Group, Category, Stage, Role — plus optional legacy/niche flags and notes.
+The app ships with 350+ pre-configured file types. Each row layers four classification axes — Group, Category, Stage, Role — plus optional legacy/niche flags and notes.
 
 | Group | Example Categories | Example Extensions |
 |-------|-------------------|-------------------|
@@ -240,8 +240,8 @@ The app ships with 270+ pre-configured file types. Each row layers four classifi
 | Audio | lossless audio, lossy audio, compressed audio, raw audio, audio ringtone, audio project, core audio container | wav, aiff, aifc, flac, caf, pcm, mp3, aac, m4a, m4r, aup3 |
 | Images | camera raw, vector design, page layout, raster image, vector image, high-dynamic-range image, image sequence / scan, font, font collection, 3D model asset, cad drawing, thumbnail, icon image, compiled asset catalog | cr3, nef, arw, dng, psd, ai, indd, jpg, avif, svg, exr, dpx, ttf, otf, ttc, glb, dwg, dxf, thm, pict, icns, car, stl |
 | Documents | document, document template, spreadsheet, tabular data, tab-separated values, fixed-layout document, presentation, screenplay, plain text, markup document, email message, database file, contact card, web archive, text snippet, word-processing document, e-book, configuration profile, web shortcut, transcript | docx, dotx, xlsx, csv, tsv, pdf, pptx, pps, pages, fdx, html, htm, txt, md, eml, emlx, fp7, vcf, url, webarchive, textclipping, odt, epub, markdown, mobileconfig, webloc, vncloc, text, whisper, skill |
-| Archives | archive, apple archive, disk image, disc image metadata, installer package, compressed archive, app archive, software package, installer project, git object data, archive container | zip, tar, gz, bz2, 7z, aar, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar, nupkg, zop, asif, pkgproj, pmproj, cpgz, pack, idx, rev, graph |
-| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, error log, manifest file, transient copy file, shell script, compiled script, AppleScript source, batch script, PowerShell script, certificate, license file, build intermediate, static and dynamic library | fcpbundle, fcpevent, srt, ttml, itt, xml, yml, mhl, xmp, acr, bim, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, err, manifest, fcpcopy, sh, scpt, applescript, bash, zsh, command, bat, ps1, cer, csr, p12, der, rkey, o, d, swiftdeps, sdkstatcache, a, dylib |
+| Archives | archive, apple archive, disk image, disc image metadata, installer package, compressed archive, app archive, software package, installer project, git object data, archive container, encrypted archive, installer package part, NAS package | zip, tar, gz, bz2, 7z, aar, dmg, iso, img, sparseimage, disc, pkg, ipa, sit, jar, nupkg, zop, asif, pkgproj, pmproj, cpgz, pack, idx, rev, graph, aea, info, sizes, pkginfo, spk |
+| Projects | library bundle, project file, subtitle, structured data, media hash list, metadata sidecar, edit decision list, media interchange, lut / color transform, archive stub, preview cache, camera metadata, error log, manifest file, transient copy file, shell script, compiled script, AppleScript source, batch script, PowerShell script, certificate, license file, build intermediate, static and dynamic library, source code, Xcode project file, backup copy, configuration file, diagnostic report | fcpbundle, fcpevent, srt, ttml, itt, xml, yml, mhl, xmp, acr, bim, rtn, edl, ale, omf, aaf, otio, drt, cube, cdl, lrprev, p5a, p5c, plist, err, manifest, fcpcopy, sh, scpt, applescript, bash, zsh, command, bat, ps1, cer, csr, p12, der, rkey, o, d, swiftdeps, sdkstatcache, a, dylib, c, h, go, rb, php, sql, pbxproj, xcscheme, xcconfig, bak, json_backup, cfg, env, diag, hang, db-wal |
 
 ### Certificate files and Xcode build files
 
@@ -251,6 +251,16 @@ Version 1.7.5 adds two groups of Projects types that help with tidying up:
 - **Xcode build files** are the temporary files Xcode leaves behind while it builds an app (`o`, `d`, `swiftdeps`, `sdkstatcache` and others). They share the category *build intermediate* and the role *regenerable build output*. Filter on that role to find old build folders. They are safe to delete, because Xcode recreates them the next time you build. Libraries (`a`, `dylib`) are labelled separately because some are real dependencies that ship with an app.
 
 As with every default, you can edit a row or reset it in Settings → File Types.
+
+### Encrypted archives, source code and backup copies
+
+Version 1.7.6 adds more everyday types found on a working Mac:
+
+- **Apple Encrypted Archives** (`aea`) are filed under Archives. They cannot be opened or previewed without their key or password, so keep the key somewhere safe.
+- **Source code** (`c`, `h`, `go`, `rb`, `php`, `sql` and similar) is grouped as *source code*. Notebooks, patches and schema files sit beside it.
+- **Xcode project files** (`pbxproj`, `xcscheme`, `xcconfig`, `entitlements` and others) share the role *Xcode project file*, so they are easy to tell apart from the build leftovers described above. Window state (`xcuserstate`) is personal and safe to delete.
+- **Backup copies** (`bak`, `backup`, and suffixes such as `json_backup` and `log_backup`) share the category *backup copy*. Once you have confirmed the original is intact, these can usually go.
+- **Crash and hang reports** (`diag`, `hang`, `ips`) are labelled as diagnostic reports. A hang report can be tens of megabytes.
 
 ### Walkthrough: a `.mov` file
 
