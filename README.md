@@ -15,18 +15,18 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 
 ### In 1.7.4
 
-- **By Folder is one clear list** — each folder shows its name, file count, size and a bar on the same row, long names wrap instead of being cut off, and only the 10 largest folders show at first with a **Show all** button for the rest. See [RELEASE-NOTES-1.7.4.md](RELEASE-NOTES-1.7.4.md).
+- **By Folder is one clear list** — each folder shows its name, file count, size and a bar on the same row, long names wrap instead of being cut off, and only the 10 largest folders show at first with a **Show all** button for the rest. See [RELEASE-NOTES-1.7.4.md](docs/releases/RELEASE-NOTES-1.7.4.md).
 - **Steadier view switcher** — the By Type / By Folder / Dead Symlinks control no longer stretches and snaps back when you change view or watched folder.
 
 ### Since 1.7.3
 
-- **A more trustworthy retained-data safety dialog** — it now also catches a scan that hit read errors (a permission problem or network interruption) partway through, even when the resulting drop looks small, and always names which watched folder it's about. A related fix stops a network share's sync hiccups (files briefly reporting 0 bytes) from being mistaken for missing data. See [RELEASE-NOTES-1.7.3.md](RELEASE-NOTES-1.7.3.md) for details.
+- **A more trustworthy retained-data safety dialog** — it now also catches a scan that hit read errors (a permission problem or network interruption) partway through, even when the resulting drop looks small, and always names which watched folder it's about. A related fix stops a network share's sync hiccups (files briefly reporting 0 bytes) from being mistaken for missing data. See [RELEASE-NOTES-1.7.3.md](docs/releases/RELEASE-NOTES-1.7.3.md) for details.
 - **Sidebar add/remove buttons stay visible** — the **+**/**−** buttons above the sidebar no longer get clipped when the sidebar is dragged narrow.
 
 ### Since 1.6
 
-- **14 more file types recognized** in 1.7.2, including a proprietary security-camera export and its recovered-fragment suffix. See [RELEASE-NOTES-1.7.2.md](RELEASE-NOTES-1.7.2.md).
-- **Large folders no longer run out of memory**, search matches names containing quotes, mirrored-tree paths are accurate, and file lists are bounded with an accurate total. See [RELEASE-NOTES-1.7.1.md](RELEASE-NOTES-1.7.1.md).
+- **14 more file types recognized** in 1.7.2, including a proprietary security-camera export and its recovered-fragment suffix. See [RELEASE-NOTES-1.7.2.md](docs/releases/RELEASE-NOTES-1.7.2.md).
+- **Large folders no longer run out of memory**, search matches names containing quotes, mirrored-tree paths are accurate, and file lists are bounded with an accurate total. See [RELEASE-NOTES-1.7.1.md](docs/releases/RELEASE-NOTES-1.7.1.md).
 - **Clearer Help and steadier layout** — bold accent-colored Help headings, explicit width constraints on the sidebar and detail panes, and a 980-point minimum window width.
 - **More file types** — defaults for Audacity, playlist, TV database, SQLite, checksum and tag files, plus camera-card metadata under Projects / Ingest. Existing custom classifications are preserved.
 
