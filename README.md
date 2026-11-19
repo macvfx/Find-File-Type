@@ -6,7 +6,7 @@ Drop a folder to watch and the app scans it recursively, recording every file by
 
 ## What's New in 1.7.5 (build 1)
 
-- **65 more file types recognized** — scripts (AppleScript, bash, zsh and others), the new Apple sparse disk image (`.asif`), OpenDocument text and e-books, certificate, key and license files, git pack data, and a "build intermediate" category for regenerable build output. See [RELEASE-NOTES-1.7.5.md](RELEASE-NOTES-1.7.5.md).
+- **65 more file types recognized** — scripts (AppleScript, bash, zsh and others), the new Apple sparse disk image (`.asif`), OpenDocument text and e-books, certificate, key and license files, git pack data, and a "build intermediate" category for the temporary files Xcode leaves behind, so you can spot build folders that are safe to delete. See [RELEASE-NOTES-1.7.5.md](RELEASE-NOTES-1.7.5.md).
 
 ### In 1.7.4
 

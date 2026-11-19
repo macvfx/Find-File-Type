@@ -6,33 +6,37 @@ All notable changes to **Find File Type** are documented here. The project follo
 
 ### Added
 
-- 65 file types are now recognised instead of landing in Uncategorized, found by
-  reviewing a real uncategorized scan:
+- 65 more file types are now recognised, so fewer files land in Uncategorized.
+  They came from a real scan of a developer's Mac:
   - **Scripts:** `applescript`, `bash`, `zsh`, `csh`, `fish`, `command`, `bat`,
     `ps1`, `bats`.
-  - **Disk image:** `asif` (Apple Sparse Image Format, new in macOS 26), filed
-    with `dmg`, `iso` and `sparseimage`.
+  - **Disk image:** `asif`, the Apple sparse disk image introduced with
+    macOS 26. It sits with `dmg`, `iso` and `sparseimage`.
   - **Documents:** `odt`, `epub`, `markdown`, `mobileconfig`, `webloc`, `vncloc`,
     `text`, `whisper`, `skill`.
-  - **Installer projects, archives and git data:** `pkgproj`, `pmproj`, `cpgz`,
-    and the git pack files `pack`, `idx`, `rev`, `mtimes`, `graph`.
-  - **Media-adjacent:** `preset`, `icns`, `car`, `stl`, and one archive container type.
-  - **Certificates, keys and sensitive files:** `cer`, `csr`, `scsr`, `p12`,
-    `der`, `p7m`, `rkey` and similar license, backup and export files. Notes on
-    the ones that hold a private key, a recovery key or an unencrypted password
-    export flag that they should not sit in shared folders.
-  - **Build intermediates:** 20 Xcode and Swift build products (`o`, `d`, `dia`,
-    `swiftdeps`, `sdkstatcache` and others) share one "build intermediate"
-    category and the role "regenerable build output", so cleanup candidates are
-    easy to spot. `a` and `dylib` are labelled as library binaries instead,
-    because they can also be shipped dependencies.
+  - **Installer projects and archives:** `pkgproj`, `pmproj`, `cpgz`, and the
+    files git uses to store a project's history (`pack`, `idx`, `rev`, `mtimes`,
+    `graph`).
+  - **Media-adjacent:** `preset`, `icns`, `car`, `stl`, and one archive
+    container type.
+  - **Certificate, key and license files:** `cer`, `csr`, `scsr`, `p12`, `der`,
+    `p7m`, `rkey` and similar license, backup and export files. The ones that
+    hold a private key, a recovery key or an unencrypted password export carry
+    a note saying they should not sit in shared folders.
+  - **Xcode build files:** when Xcode builds an app it leaves behind many
+    temporary files (`o`, `d`, `dia`, `swiftdeps`, `sdkstatcache` and 15 more).
+    They now share one category, *build intermediate*, with the role
+    *regenerable build output*. Filter on that role to find build folders you
+    can delete, because Xcode recreates them on the next build. Libraries
+    (`a`, `dylib`) are labelled separately, since some are real dependencies
+    that ship with an app, not leftovers.
 
 ### Notes
 
-- Existing databases pick the new types up on launch; the seed only inserts
-  extensions that are missing, so edited rows are untouched.
-- Deliberately not added: git tag names such as `.0-dev` (not real extensions)
-  and `*_backup` suffixes.
+- Existing databases pick up the new types the next time the app starts. Any
+  category you edited yourself is left as you set it.
+- Deliberately not added: git version-tag names such as `.0-dev` (they look
+  like extensions but are not file types) and `*_backup` suffixes.
 
 ## [1.7.4] — 2026-11-09 (build 1)
 
