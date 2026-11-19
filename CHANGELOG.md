@@ -2,6 +2,38 @@
 
 All notable changes to **Find File Type** are documented here. The project follows roughly [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions; user-facing changes first, then schema / build housekeeping.
 
+## [1.7.5] — 2026-11-18 (build 1)
+
+### Added
+
+- 65 file types are now recognised instead of landing in Uncategorized, found by
+  reviewing a real uncategorized scan:
+  - **Scripts:** `applescript`, `bash`, `zsh`, `csh`, `fish`, `command`, `bat`,
+    `ps1`, `bats`.
+  - **Disk image:** `asif` (Apple Sparse Image Format, new in macOS 26), filed
+    with `dmg`, `iso` and `sparseimage`.
+  - **Documents:** `odt`, `epub`, `markdown`, `mobileconfig`, `webloc`, `vncloc`,
+    `text`, `whisper`, `skill`.
+  - **Installer projects, archives and git data:** `pkgproj`, `pmproj`, `cpgz`,
+    and the git pack files `pack`, `idx`, `rev`, `mtimes`, `graph`.
+  - **Media-adjacent:** `preset`, `icns`, `car`, `stl`, and one archive container type.
+  - **Certificates, keys and sensitive files:** `cer`, `csr`, `scsr`, `p12`,
+    `der`, `p7m`, `rkey` and similar license, backup and export files. Notes on
+    the ones that hold a private key, a recovery key or an unencrypted password
+    export flag that they should not sit in shared folders.
+  - **Build intermediates:** 20 Xcode and Swift build products (`o`, `d`, `dia`,
+    `swiftdeps`, `sdkstatcache` and others) share one "build intermediate"
+    category and the role "regenerable build output", so cleanup candidates are
+    easy to spot. `a` and `dylib` are labelled as library binaries instead,
+    because they can also be shipped dependencies.
+
+### Notes
+
+- Existing databases pick the new types up on launch; the seed only inserts
+  extensions that are missing, so edited rows are untouched.
+- Deliberately not added: git tag names such as `.0-dev` (not real extensions)
+  and `*_backup` suffixes.
+
 ## [1.7.4] — 2026-11-09 (build 1)
 
 ### Changed

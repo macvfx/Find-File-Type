@@ -4,7 +4,11 @@ A native macOS app that catalogs and monitors file storage across watched folder
 
 Drop a folder to watch and the app scans it recursively, recording every file by type, size, modification date, and symbolic link status into a local SQLite database. A compact bottom banner shows scan progress without blocking the UI, with a cancel button in case you change your mind on a very large local or network volume. Scheduled rescans build historical snapshots so you can track how storage grows over time and answer questions like "how many MXF camera originals are on the cloud drive?" or "is proxy usage growing?"
 
-## What's New in 1.7.4 (build 1)
+## What's New in 1.7.5 (build 1)
+
+- **65 more file types recognized** — scripts (AppleScript, bash, zsh and others), the new Apple sparse disk image (`.asif`), OpenDocument text and e-books, certificate, key and license files, git pack data, and a "build intermediate" category for regenerable build output. See [RELEASE-NOTES-1.7.5.md](RELEASE-NOTES-1.7.5.md).
+
+### In 1.7.4
 
 - **By Folder is one clear list** — each folder shows its name, file count, size and a bar on the same row, long names wrap instead of being cut off, and only the 10 largest folders show at first with a **Show all** button for the rest. See [RELEASE-NOTES-1.7.4.md](RELEASE-NOTES-1.7.4.md).
 - **Steadier view switcher** — the By Type / By Folder / Dead Symlinks control no longer stretches and snaps back when you change view or watched folder.
@@ -28,7 +32,7 @@ For the full release history, see [CHANGELOG.md](CHANGELOG.md).
 - **Drag-and-drop** folder watching — or use the +/− toolbar buttons
 - **Cancelable scans** — every manual scan shows a non-blocking bottom banner with a `Cancel` button
 - **Four-axis classification** — Group (Video, Audio, Images, Documents, Archives, Projects), Category (structural file-type class), Stage (Preproduction → Archive workflow lifecycle), Role (what the file is used for)
-- **200+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
+- **270+ file types** pre-configured with sensible defaults for media/post-production workflows, including camera raw, ProRes containers, color pipeline files (CDL, CUBE, OTIO), and editorial metadata (MHL, ALE, XMP, EDL)
 - **Inline-editable categories** — edit any cell, reset a row to its default, bulk import/export the category schema as CSV
 - **Scheduled scanning** — hourly, daily, or weekly with preferred time and busy-window support (same scheduling model as BackupTrust)
 - **Symbolic link awareness** — symlinks counted at 0 bytes, dead symlinks flagged in a dedicated view
